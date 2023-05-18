@@ -17,6 +17,7 @@ async function main() {
     },
   });
 
+
   const post2 = await prisma.article.upsert({
     where: { title: "What's new in Prisma? (Q1/22)" },
     update: {},
