@@ -11,6 +11,7 @@ import {
 import { ArticlesService } from './articles.service';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
+import { CreateStatementDto } from './dto/create-statement.dto';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { ArticleEntity } from './entities/article.entity';
 
@@ -22,6 +23,7 @@ export class ArticlesController {
   @Post()
   @ApiCreatedResponse({ type: ArticleEntity })
   create(@Body() createArticleDto: CreateArticleDto) {
+    console.log(createArticleDto)
     return this.articlesService.create(createArticleDto);
   }
 
@@ -35,6 +37,12 @@ export class ArticlesController {
   @ApiOkResponse({ type: ArticleEntity, isArray: true })
   findDrafts() {
     return this.articlesService.findDrafts();
+  }
+
+  @Post('statement')
+  @ApiOkResponse({ type: ArticleEntity, isArray: true })
+  findStatement(@Body() createStatementDto : CreateStatementDto) {
+    return this.articlesService.findStatement(createStatementDto)
   }
 
   @Get(':id')

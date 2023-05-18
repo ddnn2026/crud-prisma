@@ -2,8 +2,9 @@ version: '3.8'
 services:
 
   postgres:
-    image: postgres:13.5
+    image: postgres:15
     restart: always
+    env_file: ./.env
     environment:
       - POSTGRES_USER=myuser
       - POSTGRES_PASSWORD=mypassword
