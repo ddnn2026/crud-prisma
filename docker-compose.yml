@@ -3,12 +3,21 @@ services:
   mydb:
     container_name: mydb
     image: mysql:8
-    restart: always
+    restart: unless-stopped
     env_file: ./.env
     environment:
       - MYSQL_ROOT_PASSWORD=$MYSQLDB_PASS
       - MYSQL_DATABASE=$MYSQLDB
     ports:
       - $MYSQL_LOCAL_PORT:$MYSQL_LOCAL_PORT 
-    volumes:
-      - ./src/db/db.init.sql:/docker-entrypoint-initdb.d/db.sql
+    # volumes:
+    #   - ./src/db/db.init.sql:/docker-entrypoint-initdb.d/db.sql
+
+  nestjs-api:
+    container_name: nest-api
+    build: .
+    restart: unless-stopped
+    ports:
+      - 3000:3000
+    depends_on:
+      - mydb
